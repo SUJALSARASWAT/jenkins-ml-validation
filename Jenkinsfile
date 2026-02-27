@@ -27,7 +27,7 @@ pipeline {
                     timeout(time: 60, unit: 'SECONDS') {
                         waitUntil {
                             def result = sh(
-                                script: "curl -s http://localhost:$PORT/docs || true",
+                                script: "curl -s http://host.docker.internal:$PORT/docs || true",
                                 returnStdout: true
                             )
                             return result.contains("Swagger")
@@ -42,7 +42,7 @@ pipeline {
                 script {
                     def response = sh(
                         script: """
-                        curl -s -X POST http://localhost:$PORT/predict \
+                        curl -s -X POST http://host.docker.internal:$PORT/predict \
                         -H "Content-Type: application/json" \
                         -d '{"features":["7.4","0.7","0","1.9","0.076"]}'
                         """,
@@ -63,7 +63,7 @@ pipeline {
                 script {
                     def response = sh(
                         script: """
-                        curl -s -X POST http://localhost:$PORT/predict \
+                        curl -s -X POST http://host.docker.internal:$PORT/predict \
                         -H "Content-Type: application/json" \
                         -d '{"wrong_key":[1,2,3]}'
                         """,
@@ -74,7 +74,7 @@ pipeline {
 
                     if (!response.toLowerCase().contains("error") &&
                         !response.toLowerCase().contains("detail")) {
-                        error("API did not return error for invalid input")
+                        error("API did not return error")
                     }
                 }
             }
