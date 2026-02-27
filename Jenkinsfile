@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Valid Inference Request') {
+        stage('Send Valid Inference Request') {
             steps {
                 script {
                     def response = sh(
@@ -52,13 +52,13 @@ pipeline {
                     echo "Valid Response: ${response}"
 
                     if (!response.trim()) {
-                        error("No prediction returned")
+                        error("Prediction not returned")
                     }
                 }
             }
         }
 
-        stage('Invalid Request') {
+        stage('Send Invalid Request') {
             steps {
                 script {
                     def response = sh(
