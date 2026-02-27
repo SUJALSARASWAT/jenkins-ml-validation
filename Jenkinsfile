@@ -44,7 +44,7 @@ pipeline {
                         script: """
                         curl -s -X POST http://host.docker.internal:$PORT/predict \
                         -H "Content-Type: application/json" \
-                        -d '{"features":["7.4","0.7","0","1.9","0.076"]}'
+                        -d '{"features":[]}'
                         """,
                         returnStdout: true
                     )
