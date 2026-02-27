@@ -51,8 +51,9 @@ pipeline {
 
                     echo "Valid Response: ${response}"
 
-                    if (!response.trim()) {
-                        error("Prediction not returned")
+                    if (response.toLowerCase().contains("error") ||
+                        response.toLowerCase().contains("internal")) {
+                        error("Invalid prediction response")
                     }
                 }
             }
